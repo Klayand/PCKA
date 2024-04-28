@@ -1,0 +1,47 @@
+_base_ = [
+    '../../../_base_/datasets/mmdet/coco_detection.py',
+    'mmdet::_base_/schedules/schedule_2x.py',
+    'mmdet::_base_/default_runtime.py'
+]
+
+teacher_ckpt = 'https://download.openmmlab.com/mmdetection/v2.0/fcos/fcos_r101_caffe_fpn_gn-head_mstrain_640-800_2x_coco/fcos_r101_caffe_fpn_gn-head_mstrain_640-800_2x_coco-511424d6.pth'  # noqa: E501
+
+model = dict(
+    _scope_='mmrazor',
+    type='FpnTeacherDistill',
+    architecture=dict(
+        cfg_path='mmdet::fcos/fcos_r50-caffe_fpn_gn-head_ms-640-800-2x_coco.py',
+        pretrained=False),
+    teacher=dict(
+        cfg_path='mmdet::fcos/fcos_r101-caffe_fpn_gn-head_ms-640-800-2x_coco.py',
+        pretrained=False),
+    teacher_ckpt=teacher_ckpt,
+    distiller=dict(
+        type='ConfigurableDistiller',
+        student_recorders=dict(fpn=dict(type='ModuleOutputs', source='neck')),
+        teacher_recorders=dict(fpn=dict(type='ModuleOutputs', source='neck')),
+        distill_losses=dict(
+            loss_pkd_fpn0=dict(type='CenterKernelAlignmentRKD', intra_weight=10),
+            loss_pkd_fpn1=dict(type='CenterKernelAlignmentRKD', intra_weight=10),
+            loss_pkd_fpn2=dict(type='CenterKernelAlignmentRKD', intra_weight=10),
+            loss_pkd_fpn3=dict(type='CenterKernelAlignmentRKD', intra_weight=10)),
+        loss_forward_mappings=dict(
+            loss_pkd_fpn0=dict(
+                student_logits=dict(from_student=True, recorder='fpn', data_idx=0),
+                teacher_logits=dict(from_student=False, recorder='fpn', data_idx=0)),
+            loss_pkd_fpn1=dict(
+                student_logits=dict(from_student=True, recorder='fpn', data_idx=1),
+                teacher_logits=dict(from_student=False, recorder='fpn', data_idx=1)),
+            loss_pkd_fpn2=dict(
+                student_logits=dict(from_student=True, recorder='fpn', data_idx=2),
+                teacher_logits=dict(from_student=False, recorder='fpn', data_idx=2)),
+            loss_pkd_fpn3=dict(
+                student_logits=dict(from_student=True, recorder='fpn', data_idx=3),
+                teacher_logits=dict(from_student=False, recorder='fpn',
+                             data_idx=3)))))
+
+find_unused_parameters = True
+
+val_cfg = dict(_delete_=True, type='mmrazor.SingleTeacherDistillValLoop')
+# optimizer
+optim_wrapper = dict(optimizer=dict(lr=0.01))
