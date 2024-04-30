@@ -89,6 +89,8 @@ All running logs and checkpoint are available in https://pan.baidu.com/s/1bOdAgJ
 The baidu cloud's password is `2024`.
 
 
+## If you find some issues, please contact choukai003@gmail.com .
+
 ## Citation
 
 If you find our code useful for your research, please cite our paper.
@@ -98,6 +100,15 @@ If you find our code useful for your research, please cite our paper.
   title={Rethinking Centered Kernel Alignment in Knowledge Distillation},
   author={Zikai Zhou and Yunhang Shen and Shitong Shao and Huanran Chen and Linrui Gong and Shaohui Lin},
   journal={ArXiv},
+  year={2024},
+  volume={abs/2401.11824},
+  url={https://api.semanticscholar.org/CorpusID:267069331}
+}
+
+@article{Zhou2024RethinkingCK,
+  title={Rethinking Centered Kernel Alignment in Knowledge Distillation},
+  author={Zikai Zhou and Yunhang Shen and Shitong Shao and Huanran Chen and Linrui Gong and Shaohui Lin},
+  journal={IJCAI},
   year={2024},
   volume={abs/2401.11824},
   url={https://api.semanticscholar.org/CorpusID:267069331}
