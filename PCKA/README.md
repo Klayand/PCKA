@@ -78,12 +78,6 @@ The implementation of PCKA is in `mmrazor/mmrazor/models/losses/cka_loss.py`.
 Noted that if you want to reproduce our experiments, all running code are in `mmrazor/configs/distill/mmdet`(Object Detection) and `mmrazor/configs/distill/mmseg`(Segmentation). You can follow the documents of MMRazor to execute these codes.
 
 
-**In the future, what will we do?**
-
-- [ ] Upload the code for image classification task.
-- [ ] Fix some possible bugs.
-
-
 ### Open model checkpoint and running logs.
 All running logs and checkpoint are available in https://pan.baidu.com/s/1bOdAgJmLO4dLXAv1KlX73w
 The baidu cloud's password is `2024`.
